@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+}
+
+.container{
+  display: grid;
+  grid-template-columns: repeat(6,auto);
+  border: 1px solid red;
+  width: 80%;
+  margin: auto;
+  grid-gap: 30px
+}
+
+div{
+  border: 1px solid red;
+  height: 200px;
+  text-align: center;
+}
+
+
+
+.hidden{
+  display: none;
+}
+
+
+
+
