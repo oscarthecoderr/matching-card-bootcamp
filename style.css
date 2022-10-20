@@ -19,10 +19,28 @@ div{
 
 
 
-.hidden{
+.front1, .front2, .front3 , .front4, .front5, .front6{
   display: none;
+  width:100%;
+  height: 100%;
 }
 
 
+/* inline opposite of none */
+.back,.flipped img, .match img{
+  display: inline;
+  width:100%;
+  height: 100%;
+}
 
+.flipped .back{
+  display: none;
+}
 
+.match .back{
+  display: none;
+}
+
+/* .match img{
+  border: 2px solid gold
+} */

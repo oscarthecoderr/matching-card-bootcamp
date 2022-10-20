@@ -13,46 +13,43 @@ let firstDiv = 'undefined'
 let secondDiv = 'undefined'
 
 let divs =Array.from(document.querySelectorAll('div'))
-console.log(divs) //we created a variable name playGame and we are querySelecting div from the doc and turning it into an array with Array.from method
+console.log(divs) //we created a variable name divs and we are querySelecting div from the doc and turning it into an array with Array.from method
 
- divs.forEach((element,index) =>{
+ divs.forEach((element) =>{
    element.addEventListener('click',() =>{
-    // we used a for each loop to travel each event of the array and created addEventListener 'click'.
+    // we used a for each loop to travel each event of the array and created addEventListener 'click'. 
+    if(element.classList.contains('flipped') || element.classList.contains('match') ){
+      return 
+    }
     if(firstDiv === secondDiv){
       firstDiv = element
+      element.closest('div').classList.add('flipped') 
     }else{
       secondDiv = element
-      checkingMatch(firstDiv,secondDiv)
+      element.closest('div').classList.add('flipped')
+
+      setTimeout(checkingMatch,800) 
+      firstDiv = 'undefined'
+      secondDiv = 'undefined' 
     }
-     
       
-    
-     console.log(element)
-    element.querySelector('img').classList.toggle('hidden')  
    })
  }) 
  
-  const BBimages = ['imageOne','imageTwo','imageThree','imageFour','imageFive', 'imageSix','imageOne','imageTwo','imageThree','imageFour','imageFive', 'imageSix']
+  const BBimages = ['album.jpeg','yhlqmdlg.jpeg','oasis.jpeg','ultimoTour.jpeg','Verano.jpeg','x100pre.png','album.jpeg','yhlqmdlg.jpeg','oasis.jpeg','ultimoTour.jpeg','Verano.jpeg','x100pre.png']
 
-
-
- function shuffle(array) {
-  let currentIndex = array.length,  randomIndex; //???
-
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
-      // ^^ definitely look into it
+ function shuffle() {
+  let cards = document.querySelectorAll('.card img:not(.back)')
+  cards.forEach(img => img.src='')
+ 
+  for( let i = 0 ; i < 12 ; i++){
+    
+    let newcards = document.querySelectorAll("img[src='']")
+    let random = Math.floor(Math.random() * newcards.length)
+    
+    newcards[random].parentNode.classList.remove('flipped','match')
+    newcards[random].src = BBimages[i] 
   }
-
-  return array;
 }
 //call shuffle function
 shuffle(BBimages)
@@ -60,19 +57,30 @@ shuffle(BBimages)
 console.log(BBimages);
 
 
-function checkingMatch(firstDiv,secondDiv){
-console.log(firstDiv)
-  let firstImage = firstDiv.querySelector('img')
-   
-  let secondImage = secondDiv.querySelector('img')
+function checkingMatch(){
+  console.log('hit')
+// we're selecting the flipped classes but not the backs ( we have to do this all front class have different number at the end but the back have the class name that should not be compared)
+  let firstImage = document.querySelectorAll('.flipped>img:not(.back)')[0]
+   // querySelectorAll targets the array of flipped cards. thats why we using the square brackets in the first and second index of the element.
+  let secondImage = document.querySelectorAll('.flipped>img:not(.back)')[1]
+  console.log(secondImage.parentNode,firstImage.parentNode)
+  console.log(firstImage.src,secondImage.src)
+  firstImage.parentNode.classList.remove('flipped')
+  secondImage.parentNode.classList.remove('flipped')
 
-  //console.log(secondImage)
-
-  //console.log(secondImage.src)
-  //console.log(firstImage)
-  console.log(secondDiv)
+  if(firstImage.src === secondImage.src){
+    console.log('its a match')
+    firstImage.parentNode.classList.add('match')
+    secondImage.parentNode.classList.add('match')
+    checkForWin()
+  }
 }
-
-
-
+let totalCards = 12
+function checkForWin(){
+  //if all cards are matched, the game is over.
+  if( document.querySelectorAll('.match').length === totalCards){
+    alert('Gamer Over')
+    shuffle()
+  }
+}
 
