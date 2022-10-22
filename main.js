@@ -11,9 +11,23 @@
 
 let firstDiv = 'undefined'
 let secondDiv = 'undefined'
-
+let container = document.querySelector('.container')
+let hideGame = true
 let divs =Array.from(document.querySelectorAll('div'))
+let button = document.querySelector('.restart')
+button.addEventListener('click',shuffle)
+if(hideGame){
+  container.style.display = 'none'
+  button.style.display = 'none'
+}
 console.log(divs) //we created a variable name divs and we are querySelecting div from the doc and turning it into an array with Array.from method
+document.querySelector('.startGame').addEventListener('click',(e) =>{
+  container.style.display = 'grid'
+  hideGame = false
+  e.target.style.display ='none'
+  button.style.display = 'block'
+})
+
 
  divs.forEach((element) =>{
    element.addEventListener('click',() =>{
@@ -31,8 +45,8 @@ console.log(divs) //we created a variable name divs and we are querySelecting di
       setTimeout(checkingMatch,800) 
       firstDiv = 'undefined'
       secondDiv = 'undefined' 
-    }
-      
+    
+  }  
    })
  }) 
  
@@ -40,7 +54,7 @@ console.log(divs) //we created a variable name divs and we are querySelecting di
 
  function shuffle() {
   let cards = document.querySelectorAll('.card img:not(.back)')
-  cards.forEach(img => img.src='')
+  cards.forEach(img => img.src='') // setting all images.src to nothing. meaning no source.
  
   for( let i = 0 ; i < 12 ; i++){
     
@@ -83,4 +97,5 @@ function checkForWin(){
     shuffle()
   }
 }
+
 
